@@ -25,11 +25,31 @@ def test_transcribe():
     """
     Write your unit test for the transcribe function here.
     """
-    pass
+    seq = "ATCG"
+    result = transcribe(seq)
+    assert result == "UAGC"
+
+    seq = "AAATTTCCCGGG"
+    result = transcribe(seq)
+    assert result == "UUUAAAGGGCCC"
+
+    seq = ""
+    result = transcribe(seq)
+    assert result == ""
 
 
 def test_reverse_transcribe():
     """
     Write your unit test for the reverse transcribe function here.
     """
-    pass
+    seq = "ATCG"
+    result = reverse_transcribe(seq)
+    assert result == "CGAU"
+
+    seq = "AAATTTCCCGGG"
+    result = reverse_transcribe(seq)
+    assert result == "CCCGGGAAAUUU"
+
+    seq = ""
+    result = reverse_transcribe(seq)
+    assert result == ""

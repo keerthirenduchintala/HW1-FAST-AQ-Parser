@@ -33,15 +33,37 @@ def test_FastaParser():
     files that are blank or corrupted in some way. Two example Fasta files are
     provided in /tests/bad.fa and /tests/empty.fa
     """
-    pass
-
+    # Test edge cases
+    # test if file is blank - raise Error
+    with pytest.raises(ValueError):
+        parser = FastaParser("tests/empty.fa")
+        list(parser)
+    # test if file is bad - raise Error
+    with pytest.raises(ValueError):
+        parser = FastaParser("tests/bad.fa")
+        list(parser)
+    # Test general cases (every seq has an actual sequence, total lines match)
+    test_obj = FastaParser("data/test.fa")
+    for record in test_obj:
+        assert len(record) == 2  # Has 2 items
+        assert record[0] is not None  # Header exists
+        assert record[1] is not None  # Sequence exists
+        assert len(record[0]) > 0  # Header is not empty
+        assert len(record[1]) > 0  # Sequence is not empty
+    #total length 200/2
+    records = list(test_obj)
+    assert len(records) == 100
 
 def test_FastaFormat():
     """
-    Test to make sure that a fasta file is being read in if a fastq file is
+    Test to make sure that a fasta file is being read in - if a fastq file is
     read, the first item is None
     """
-    pass
+
+    test_object = FastaParser("data/test.fq")  
+    for record in test_object:
+        assert record[0] is None
+   
 
 
 def test_FastqParser():
@@ -50,11 +72,27 @@ def test_FastqParser():
     an instance of your FastqParser class and assert that it properly reads 
     in the example Fastq File.
     """
-    pass
+    # test if file is blank - raise Error
+    with pytest.raises(ValueError):
+        parser = FastqParser("tests/empty.fa")
+        list(parser)
+
+    # Test general cases (every seq has 3 items: header, sequence, quality)
+    test_obj = FastqParser("data/test.fq")
+    for record in test_obj:
+        assert len(record) == 3  # FASTQ has 3 items (header, seq, quality)
+        assert record[0] is not None  # Header exists
+        assert record[1] is not None  # Sequence exists
+        assert record[2] is not None  # Quality exists
+        assert len(record[0]) > 0  # Header is not empty
+        assert len(record[1]) > 0  # Sequence is not empty
+        assert len(record[2]) > 0  # Quality is not empty
 
 def test_FastqFormat():
     """
     Test to make sure fastq file is being read in. If this is a fasta file, the
     first line is None
     """
-    pass
+    test_object = FastqParser("data/test.fa")  
+    for record in test_object:
+        assert record[0] is None
