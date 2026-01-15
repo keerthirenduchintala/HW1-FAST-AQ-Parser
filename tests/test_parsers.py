@@ -36,7 +36,7 @@ def test_FastaParser():
     # Test edge cases
     # test if file is blank - raise Error
     with pytest.raises(ValueError):
-        parser = FastaParser("tests/empty.fa")
+        parser = FastaParser("tests/blank.fa")
         list(parser)
     # test if file is bad - raise Error
     with pytest.raises(ValueError):
@@ -74,7 +74,7 @@ def test_FastqParser():
     """
     # test if file is blank - raise Error
     with pytest.raises(ValueError):
-        parser = FastqParser("tests/empty.fa")
+        parser = FastqParser("tests/blank.fa")
         list(parser)
 
     # Test general cases (every seq has 3 items: header, sequence, quality)
