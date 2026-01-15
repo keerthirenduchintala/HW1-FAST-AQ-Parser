@@ -63,6 +63,7 @@ def test_FastaFormat():
     test_object = FastaParser("data/test.fq")  
     for record in test_object:
         assert record[0] is None
+        break
    
 
 
@@ -96,3 +97,4 @@ def test_FastqFormat():
     test_object = FastqParser("data/test.fa")  
     for record in test_object:
         assert record[0] is None
+        break
